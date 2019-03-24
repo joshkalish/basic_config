@@ -1,0 +1,32 @@
+alias ll='ls -l'
+alias jq=jq-linux64
+alias vi=vim
+
+export PATH=${PATH}:/addon/bin
+
+export JAVA_HOME=/opt/Java/jdk-11.0.1
+export PATH=${PATH}:${JAVA_HOME}/bin
+export MANPATH=${MANPATH}:${JAVA_HOME}/man
+
+export R_HOME=/opt/R/R-3.5.1
+export PATH=${PATH}:${R_HOME}/bin
+
+export HADOOP_HOME=/opt/hadoop/hadoop-2.9.2
+export HADOOP_CONF_DIR=${HADOOP_HOME}/etc/hadoop
+export PATH=${PATH}:${HADOOP_HOME}/bin
+
+export PIG_HOME=/opt/hadoop/pig-0.17.0
+#export PATH=${PATH}:/bin
+export PIG_CLASSPATH=${HADOOP_CONF_DIR}
+
+echo "Display: ${DISPLAY}"
+echo "PATH is: "
+sed 's/:/\n/g' <<< "$PATH"
+
+
+getnews () {
+  curl https://newsapi.org/v2/top-headlines -s -G \
+ -d sources=$1 \
+ -d apiKey=596768d197094a3ca8922d45704899f4 \
+ | jq '.articles[] | .title'
+}
